@@ -14,9 +14,9 @@ Transformer를 vision에 활용한 본 모델은 충분히 pre-trained된 상황
 
 본 논문에서는 vision과 NLP에 의해 생기는 제한사항을 해결하고자 image를 position에 따라 patch로 나누어 일종의 Sequence를 강제로 만드는 방식을 사용했습니다.
 
-patch를 만드는 방식은 간단합니다. 적당한 patch size를 정하고 image를 size에 맞춰 reshape 해주면 $$N=HW/P^2$$ 의 N개의 patch가 생성됩니다. $$H*W*C$$의 image를 $$N*(P^2\cdot C)$$로 reshape 하는 과정입니다.
+patch를 만드는 방식은 간단합니다. 적당한 patch size를 정하고 image를 size에 맞춰 reshape 해주면 N=HW/P^2 의 N개의 patch가 생성됩니다. H\*W\*C의 image를 N*(P^2\cdot C)로 reshape 하는 과정입니다.
 
-논문에서는 Transformer의 input으로 활용될 image patch에 대한 Embedding으로 image 정보가 담긴 patch embedding과 위치 정보가 담긴 position embedding을 함께 활용했습니다. 또한 저자는 각 image의 patch sequence에 BERT의 [CLS] 토큰과 같은 역할을 하는 learnable token인 class token을 추가하여 Transformer가 반복되면서 image의 class에 대한 학습이 이어질 수 있도록 하였습니다. 전체적인 Transformer의 input($$\mathbf{z_0}$$)을  아래의 수식을 통해 알 수 있습니다.
+논문에서는 Transformer의 input으로 활용될 image patch에 대한 Embedding으로 image 정보가 담긴 patch embedding과 위치 정보가 담긴 position embedding을 함께 활용했습니다. 또한 저자는 각 image의 patch sequence에 BERT의 [CLS] 토큰과 같은 역할을 하는 learnable token인 class token을 추가하여 Transformer가 반복되면서 image의 class에 대한 학습이 이어질 수 있도록 하였습니다. 전체적인 Transformer의 input(z_0)을  아래의 수식을 통해 알 수 있습니다.
 $$z_0 = [x_{class};x^1_p\mathbf{E};x^2_p\mathbf{E};\cdots;x^N_p\mathbf{E}]+\mathbf{E}_{pos}$$
 >$$\mathbf{x}_{class}$$: learnable한 class token
 $$\mathbf{x}^1_p\mathbf{E}$$: p번째 image의 1번째 Patch Embedding
